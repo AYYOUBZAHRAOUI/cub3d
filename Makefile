@@ -1,45 +1,80 @@
-# compiler and flags
-CC = cc 
-FLAGS = -Wall -Werror -Wextra # i need more flags for the minilibx
 
-# folders
-OBJ_DIR = obj
+# Cub3D Project Makefile
+
+# Name of the executable
+NAME = cub3D
+
+# Compiler and flags
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+MLX_FLAGS = -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib"
+
+# Directories
 SRC_DIR = src
-INCL_DIR = include
+OBJ_DIR = obj
+INC_DIR = include
 LIBFT_DIR = libft
+MLX_DIR = ~/MLX42
+# you need to fix this path
 
-# source files
-SRC_FILES = $(wildcard $(SRC_DIR)/*c)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
+# Source files
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
-NAME = cub3d
-LIBFT = $(LIBFT_DIR)/libft.a
+# Include paths
+INCLUDES =  -I$(INC_DIR)  -I$(LIBFT_DIR)/include -I/Users/$(USER)/MLX42/include/MLX42
 
+# Rules
+all: $(NAME)
 
-# don't forget to check libft will ubdate when one file in libft change
-# Target
-all: $(LIBFT) $(NAME)
-
-# Rule create libft
-$(LIBFT): 
-	@make -C $(LIBFT_DIR)
-	@echo "libft.a created"
-
-$(NAME): $(OBJ_FILES)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+# Create object directory
+$(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -I$(INCL_DIR) -c $< -o $@
 
+# Compile MinilibX
+$(MLX_DIR)/build/libmlx42.a:
+	@echo "Compiling MinilibX..."
+	@$(MAKE) -C $(MLX_DIR)
+
+# Compile libft
+$(LIBFT_DIR)/libft.a:
+	$(MAKE) -C $(LIBFT_DIR)
+
+# Compile object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Link the executable
+$(NAME): $(OBJS) $(MLX_DIR)/build/libmlx42.a $(LIBFT_DIR)/libft.a
+	$(CC) $(CFLAGS) -I$(INCLUDES) $(OBJS) $(LIBFT_DIR)/libft.a $(MLX_DIR)/build/libmlx42.a $(MLX_FLAGS) -o $(NAME)
+	@echo "$(NAME) compiled successfully!"
+
+# 	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLXHEADERS)  $(OBJ_FILES) $(LIBFT) $(MLX) -o $(NAME)
+
+# Clean object files
 clean:
 	rm -rf $(OBJ_DIR)
-	make clean -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
+# 	i don't recommend cleaning MinilibX
+	@echo "Object files cleaned!$(MAKE)"
+# ----- don't forget to check this $(MAKE) -----
 
-fclean : clean
+# Clean all generated files
+fclean: clean
 	rm -f $(NAME)
-	make fclean -C libft
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "Executable cleaned!"
 
+# Rebuild the project
 re: fclean all
 
-.PHONY: all clean fclean re
+# Run the program
+run: all
+	./$(NAME) maps/default.cub
+
+# Debug with valgrind (memory leak check)
+debug: CFLAGS += -g
+debug: re
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) maps/default.cub
+
+.PHONY: all clean fclean re run debug
