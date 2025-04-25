@@ -19,6 +19,7 @@ MLX_DIR = ~/MLX42
 
 # Source files
 SRCS = $(wildcard $(SRC_DIR)/*.c)
+SRCS += $(wildcard $(SRC_DIR)/parsing/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Include paths
@@ -30,6 +31,7 @@ all: $(NAME)
 # Create object directory
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/parsing
 
 # Compile MinilibX
 $(MLX_DIR)/build/libmlx42.a:
@@ -46,7 +48,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 # Link the executable
 $(NAME): $(OBJS) $(MLX_DIR)/build/libmlx42.a $(LIBFT_DIR)/libft.a
-	$(CC) $(CFLAGS) -I$(INCLUDES) $(OBJS) $(LIBFT_DIR)/libft.a $(MLX_DIR)/build/libmlx42.a $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_DIR)/libft.a $(MLX_DIR)/build/libmlx42.a $(MLX_FLAGS) -o $(NAME)
 	@echo "$(NAME) compiled successfully!"
 
 # 	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(MLXHEADERS)  $(OBJ_FILES) $(LIBFT) $(MLX) -o $(NAME)

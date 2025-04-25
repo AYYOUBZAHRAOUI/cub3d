@@ -14,31 +14,44 @@
 #include "libft.h"
 #include "MLX42.h"
 
-// /*
-// ----------- you need to create a basic trunctur but not to day ----------
-// */
-// typedef struct rgb
-// {
-//     unsigned int red;
-//     unsigned int grean;
-//     unsigned int blue;
-// } t_rgb;
+/*
+----------- you need to create a basic trunctur but not to day ----------
+*/
+typedef struct rgb
+{
+    int red;
+    int grean;
+    int blue;
+} t_rgb;
 
-// typedef struct  map
-// {
-//     char *so;
-//     char *no;
-//     char *we;
-//     char *ea;
-//     t_rgb *f;
-//     t_rgb *c;
-//     char **map;
-// } t_map;
+typedef struct  map
+{
+    char *so;
+    char *no;
+    char *we;
+    char *ea;
+    char *floor_color;
+    char *ceiling_color;
+    t_rgb *f;
+    t_rgb *c;
+    char **map;
+} t_map;
 
-// /*
-// ---------- functions prototypes ------------
-// */
-// void check_argument(int ac, char **av);
-// // void parsing(t_map *m, int fd); 
+/* ----------- PARSING FUNCTION ------------ */
+int check_args(int ac, char **av);
+int parse_map(char *file, t_map *map);
+int parse_texture_and_color(int fd, t_map *map);
+void free_split(char **split);
+int parse_color(char *color_str, t_rgb **rgb);
+int parse_rgb_colors(t_map *map);
+int parse_one_line(char *line, t_map *map);
+int parse_id_line(char *line, char *identifier, char **texture);
+int check_color(char *color_str, int *color);
+/* ----------- TEST FUNCTION -------------- */
+void print_map(t_map *map);
+
+/* ----------- UTILS FUNCTION ------------ */
+int int_map(t_map *map);
+
 
 #endif

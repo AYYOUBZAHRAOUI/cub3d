@@ -1,36 +1,27 @@
 #include "cub3d.h"
 
-// Simple key hook function
-void	key_hook(mlx_key_data_t keydata, void *param)
+int	main(int ac, char **av)
 {
-	mlx_t	*mlx;
-
-	mlx = param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(mlx);
+	t_map	map;
+	if (check_args(ac, av) == 0)
+		return (1);
+	int_map(&map);
+	if (!(parse_map(av[1], &map)))
+		return (1);
+	print_map(&map);
+	return (0);
 }
 
-int32_t	main(void)
+int int_map(t_map *map)
 {
-	mlx_t	*mlx;
-
-	// Initialize MLX42
-	mlx = mlx_init(640, 480, "Cub3D Test", true);
-	if (!mlx)
-	{
-		printf("Error: Failed to initialize MLX42");
-		return (EXIT_FAILURE);
-	}
-
-	// Register a key hook
-	mlx_key_hook(mlx, &key_hook, mlx);
-	
-	printf("MLX42 test running. Press ESC to exit.");
-	
-	// Start the main loop
-	mlx_loop(mlx);
-	
-	// Clean up
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
+	map->so = NULL;
+	map->no = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->floor_color = NULL;
+	map->ceiling_color = NULL;
+	map->f = NULL;
+	map->c = NULL;
+	map->map = NULL;
+	return (1);
 }

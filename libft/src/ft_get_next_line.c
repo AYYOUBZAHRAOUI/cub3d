@@ -1,10 +1,30 @@
 #include "libft.h"
 
+char	*ft_costume_strdup(const char *s1)
+{
+	int		i;
+	int		j;
+	char	*p;
+
+	i = ft_strlen(s1);
+    if (i == 0)
+        return (NULL);
+	j = 0;
+	p = (char *)ft_calloc(i + 1, 1);
+	if (p == NULL)
+		return (NULL);
+	while (j < i + 1)
+	{
+		p[j] = s1[j];
+		j++;
+	}
+	return (p);
+}
 
 char *ft_get_next_line(int fd)
 {
     static char buf[BUFFER_SIZE];
-    char line[1000000];
+    char line[100000];
     static int bufread;
     static int bufpose;
     int i;
@@ -25,5 +45,5 @@ char *ft_get_next_line(int fd)
             break;
     }
     line[i] = '\0';
-    return (ft_strdup(line));
+    return (ft_costume_strdup(line));
 }
