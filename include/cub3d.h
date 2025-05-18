@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:33:59 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 15:07:55 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/18 00:40:00 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,22 @@
 # include "libft.h"
 # include "MLX42.h"
 
+# define WIDTH 800
+# define HEIGHT 600
+# define TILE_SIZE 64
+# define FOV (M_PI / 3)
+# define NUM_RAYS WIDTH
+
 /*
 ----------- you need to create a basic trunctur but not to day ----------
 */
+typedef struct s_player
+{
+	double	x;
+	double	y;
+	double	angle;
+}				t_player;
+
 typedef struct rgb
 {
 	int	red;
@@ -47,6 +60,15 @@ typedef struct map
 	t_rgb	*c;
 	char	**map;
 }	t_map;
+
+typedef struct s_game
+{
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	t_player	player;
+	t_map	map;
+}				t_game;
+
 /* ----------------------------------------- */
 /* ----------- PARSING FUNCTION ------------ */
 /* ----------------------------------------- */
@@ -82,5 +104,16 @@ int		print_map(t_map *map);
 
 /* ----------- UTILS FUNCTION ------------ */
 
+/* ---------------------------------------------- */
+/* ----------- RAYS CASTING FUNCTION ------------ */
+/* ---------------------------------------------- */
+void	move_player(t_game *game, double move_step, int direction);
+void	handle_input(t_game *game);
+double 	calculate_wall_height(t_game *game, int i);
+void	draw_3d_walls(t_game *game);
+void	update(void *param);
+int		is_wall_at(t_game *game, double x, double y);
+double	normalize_angle(double angle);
+double	cast_ray(t_game *game, double ray_angle);
 
 #endif

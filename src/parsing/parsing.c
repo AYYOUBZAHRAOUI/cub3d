@@ -6,11 +6,35 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 22:17:02 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 15:41:36 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/17 23:41:08 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int check_exist_file(t_map *map){
+	int fd1 = open(map->no, O_RDONLY);
+	int fd2 = open(map->so, O_RDONLY);
+	int fd3 = open(map->ea, O_RDONLY);
+	int fd4 = open(map->we, O_RDONLY);
+
+	// printf("ea: %d '%s'\n", fd4,map->ea);
+	if(fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0){
+		perror("Error ");
+		close(fd1);
+		close(fd2);
+		close(fd3);
+		close(fd4);
+		return 0;
+	}
+	else{
+		close(fd1);
+		close(fd2);
+		close(fd3);
+		close(fd4);
+		return 1;
+	}
+}
 
 /*
  * @brief the main function to parse the map
@@ -19,6 +43,8 @@
  * @return 1 if the map is valid, 0 if the map is invalid
  * @note this function will print an error message if the file is invalid
 */
+
+
 int	parse_map(char *file, t_map *map)
 {
 	int	fd;
@@ -27,6 +53,7 @@ int	parse_map(char *file, t_map *map)
 	if (fd > -1)
 	{
 		if (parse_texture_and_color(fd, map)
+			&& check_exist_file(map)
 			&& parse_map_lines(fd, map)
 			&& check_map(map->map))
 		{
@@ -86,6 +113,10 @@ int	parse_texture_and_color(int fd, t_map *map)
  * @return 1 if the line is valid, 0 if the line is invalid
  * @note this function prints an error message if the line is invalid
 */
+
+
+
+
 int	parse_one_line(char *line, t_map *map)
 {
 	int	parse_result;

@@ -1,4 +1,5 @@
 
+
 # Cub3D Project Makefile
 
 # Name of the executable
@@ -6,7 +7,7 @@ NAME = cub3D
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror # -fsanitize=address -g
 MLX_FLAGS = -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib"
 
 # Directories
@@ -20,6 +21,7 @@ MLX_DIR = ~/MLX42
 # Source files
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 SRCS += $(wildcard $(SRC_DIR)/parsing/*.c)
+SRCS += $(wildcard $(SRC_DIR)/rays_casting/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Include paths
@@ -32,6 +34,7 @@ all: $(NAME)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/parsing
+	mkdir -p $(OBJ_DIR)/rays_casting
 
 # Compile MinilibX
 $(MLX_DIR)/build/libmlx42.a:

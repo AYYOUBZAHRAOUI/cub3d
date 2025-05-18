@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 22:58:47 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:12 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:54:06 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,29 @@
  * @return 1 if the colors is valid, 0 if the colors is invalid
  * @note this function prints an error message if the colors is invalid
 */
+
+int count_ver(char *str){
+	int count = 0;
+	int i = 0;
+	while(str[i]){
+		if(str[i] == ','){
+			count++;	
+		}
+	i++;
+	}
+	return count;
+}
+
 int	parse_rgb_colors(t_map *map)
 {
+	if(count_ver(map->floor_color) != 2){
+		ft_putstr_fd("Error: Invalid floor color", 2);
+		return (0);
+	}
+	if(count_ver(map->ceiling_color) != 2){
+		ft_putstr_fd("Error: Invalid ceiling color", 2);
+		return (0);
+	}
 	if (!parse_color(map->floor_color, &map->f))
 	{
 		ft_putstr_fd("Error: Invalid floor color", 2);
@@ -39,10 +60,13 @@ int	parse_rgb_colors(t_map *map)
  * @param rgb the rgb struct to fill
  * @return 1 if the color is valid, 0 if the color is invalid
 */
+
+
+
 int	parse_color(char *color_str, t_rgb **rgb)
 {
 	char	**values;
-
+	
 	values = ft_split(color_str, ',');
 	if (!values || !values[0] || !values[1] || !values[2] || values[3])
 	{
@@ -64,7 +88,7 @@ int	parse_color(char *color_str, t_rgb **rgb)
 		return (1);
 	}
 	free_str_array(values);
-	free(*rgb);
+	// free(*rgb);
 	return (0);
 }
 
@@ -76,12 +100,26 @@ int	parse_color(char *color_str, t_rgb **rgb)
  * (map->f/c->red, map->f/c->green, map->f/c->blue)
  * @return 1 if the color is valid, 0 if the color is invalid
 */
+
+int is_color_format(char *str){
+	int i = 0;
+	while( str[i] && (str[i] >= '0' && str[i] <= '9')){
+			i++;	
+		}
+	if(str[i] == '\0')
+		return 0;
+	return 1;
+}
 int	check_color(char *color_str, int *color)
 {
 	char	*r_trim;
 	int		color_value;
 
 	r_trim = ft_strtrim(color_str, " \t");
+	if(is_color_format(r_trim) == 1){
+		free(r_trim);
+		return (0);
+	}
 	color_value = ft_atoi(r_trim);
 	free(r_trim);
 	if (!(0 <= color_value && color_value <= 255))
