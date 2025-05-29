@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:37:36 by ybekach           #+#    #+#             */
-/*   Updated: 2025/05/18 01:24:46 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:11:35 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_wall_at(t_game *game, double x, double y)
 
 	grid_x = (int)((x - TILE_SIZE / 2)   / TILE_SIZE);
 	grid_y = (int)((y - TILE_SIZE / 2) / TILE_SIZE);
-	if (grid_x < 0 || grid_y < 0 || grid_y >= 10 || grid_x >= 10)
+	if (grid_x < 0 || grid_y < 0)
 		return (1);
 	return (game->map.map[grid_y][grid_x] == '1');
 }

@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 01:24:35 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 15:05:20 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:47:56 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,30 @@ int	get_max_length(char **map)
  * @brief count the number of lines in the map
 	* @param map the map to check is a double pointer of char
 	* @return the number of lines in the map
+	* Check for empty lines at the end of the map
 */
 int	count_lines(char **map)
 {
 	int	count;
-
+	char *trim_line;
 	count = 0;
 	while (map[count])
 		count++;
+	
+	while (count > 0)
+	{
+		trim_line = ft_strtrim(map[count - 1], " \t\n");
+		if (*trim_line == '\0')
+		{
+			free(trim_line);
+			count--;
+		}
+		else
+		{
+			free(trim_line);
+			break;
+		}
+	}
 	return (count);
 }
 
@@ -87,12 +103,12 @@ char	**normalize_map(char **map)
 	int		num_lines;
 
 	max_length = get_max_length(map);
-	num_lines = count_lines(map);
+	num_lines = count_lines(map); // you need to edit this function to skip empty lines at the end of the list
 	normalized = malloc((num_lines + 1) * sizeof(char *));
 	if (normalized == NULL)
 		return (perror("Error"), NULL);
 	i = -1;
-	while (++i < num_lines) 
+	while (++i < num_lines) // i don't trust this method
 	{
 		normalized[i] = malloc((max_length + 1) * sizeof(char));
 		fill_line_by_spaces(normalized[i], max_length);

@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:33:59 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/18 00:40:00 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/29 23:49:31 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_player
 typedef struct rgb
 {
 	int	red;
-	int	grean;
+	int	green;
 	int	blue;
 }	t_rgb;
 

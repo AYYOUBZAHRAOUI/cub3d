@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 22:17:02 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/17 23:41:08 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:35:44 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	parse_map(char *file, t_map *map)
 		if (parse_texture_and_color(fd, map)
 			&& check_exist_file(map)
 			&& parse_map_lines(fd, map)
-			&& check_map(map->map))
+			&& print_map(map)
+			&& printf("Map parsed successfully\n")
+			&& check_map(map->map)
+			&& printf("Map is valid\n"))
 		{
 			close(fd);
 			return (1);

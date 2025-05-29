@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:31:45 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 16:13:53 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:37:51 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	check_map(char **map)
 		ft_putstr_fd("Error: Map have invalid characters or miss one or more\n", 2);
 		return (0);
 	}
+	printf("debug: 1 \n");
 	if (check_map_walls_1(map) == 0)
 	{
 		ft_putstr_fd("Error: Map is not surrounded by walls\n", 2);
@@ -127,8 +128,12 @@ int	check_map_walls_1(char **map)
 			return (0);
 		j++;
 	}
+	printf("debug: 2 \n");
 	if (check_map_walls_2(map) == 0)
+	{
+		printf("debug: 3 \n");
 		return (0);
+	}
 	return (1);
 }
 

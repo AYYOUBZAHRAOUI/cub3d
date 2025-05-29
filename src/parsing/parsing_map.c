@@ -6,33 +6,32 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 22:32:03 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/16 21:02:44 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:39:10 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
- * @brief check if the line is empty
+ * @brief fill empty lines with spaces
  * @param line the line to check
  * @return 1 if the line is not empty, 0 if the line is empty
  * @note this function prints an error message if the line is empty
- * @noe this function used in parse_map_lines to 
- * check if there is empty lines inside the map
+ * @note this function used in parse_map_lines to 
 */
-int	check_empty_lines(char *line)
+void	handle_empty_lines(char *line)
 {
 	char	*trim_line;
-
 	trim_line = ft_strtrim(line, " \t\n");
-	if (trim_line[0] == '\0')
+	if (*trim_line == '\0')
 	{
 		free(trim_line);
-		ft_putstr_fd("Error: Map have a empty line\n", 2);
-		return (0);
+		free(line);
+		line = malloc(3*sizeof(char));
+		line[0] = ' ';
+		line[1] = '\n';
+		line[2] = '\0';
 	}
-	free(trim_line);
-	return (1);
 }
 
 /*
@@ -52,8 +51,7 @@ int	parse_map_lines(int fd, t_map *map)
 	line = skip_empty_lines(fd);
 	while (line)
 	{
-		if (check_empty_lines(line) == 0)
-			return (free(big_line), free(line), 0);
+		handle_empty_lines(line);
 		tmp = big_line;
 		big_line = ft_strjoin(big_line, line);
 		if (tmp)

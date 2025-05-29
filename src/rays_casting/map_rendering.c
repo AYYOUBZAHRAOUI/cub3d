@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:35:19 by ybekach           #+#    #+#             */
-/*   Updated: 2025/05/18 01:02:05 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:05:29 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,25 @@ void	draw_3d_walls(t_game *game)
 
 void	update(void *param)
 {
-	int		x;
-	int		y;
+	// int		x;
+	// int		y;
 	t_game	*game;
 
 	game = (t_game *)param;
 	handle_input(game);
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			mlx_put_pixel(game->img, x, y, 0x000000FF);
-			x++;
-		}
-		y++;
-	}
+	// y = 0;
+	// while (y < HEIGHT)
+	// {
+	// 	x = 0;
+	// 	while (x < WIDTH)
+	// 	{
+	// 		mlx_put_pixel(game->img, x, y, 0x000000FF);
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	ft_memset(game->img->pixels, 0, (game->img->width * game->img->height * sizeof(int))/2);
+	ft_memset(game->img->pixels + ((game->img->width * game->img->height * sizeof(int))/2), 255, (game->img->width * game->img->height * sizeof(int))/2);
 	draw_3d_walls(game);
 	mlx_image_to_window(game->mlx, game->img, 0, 0);
 }

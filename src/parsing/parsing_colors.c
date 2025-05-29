@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 22:58:47 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/16 20:54:06 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/05/30 00:03:42 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	parse_color(char *color_str, t_rgb **rgb)
 		return (0);
 	}
 	if (check_color(values[0], &((*rgb)->red))
-		&& check_color(values[1], &((*rgb)->grean))
+		&& check_color(values[1], &((*rgb)->green))
 		&& check_color(values[2], &((*rgb)->blue)))
 	{
 		free_str_array(values);
