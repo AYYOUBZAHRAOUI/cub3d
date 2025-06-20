@@ -1,8 +1,8 @@
 C 225,30,0
-NO /Users/ayzahrao/Documents/cub3d/src/parsing/normalize_map.c
-SO /Users/ayzahrao/Documents/cub3d/src/parsing/normalize_map.c
-WE /Users/ayzahrao/Documents/cub3d/src/parsing/normalize_map.c 
-EA /Users/ayzahrao/Documents/cub3d/src/parsing/normalize_map.c
+NO /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
+SO /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
+WE /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub 
+EA /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
 F 220, 100, 20
 
 

@@ -8,7 +8,8 @@ NAME = cub3D
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror # -fsanitize=address -g
-MLX_FLAGS = -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib"
+
+
 
 # Directories
 SRC_DIR = src
@@ -16,7 +17,22 @@ OBJ_DIR = obj
 INC_DIR = include
 LIBFT_DIR = libft
 MLX_DIR = ~/MLX42
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Linux)
+    # Linux-specific commands
+    MLX_FLAGS = -ldl -lglfw -pthread -lm
+    INCLUDES =  -I$(INC_DIR)  -I$(LIBFT_DIR)/include -I$(HOME)/MLX42/include/MLX42
+
+else ifeq ($(UNAME_S),Darwin)
+    # macOS-specific commands
+    MLX_FLAGS = -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib"
+    INCLUDES =  -I$(INC_DIR)  -I$(LIBFT_DIR)/include -I/Users/$(USER)/MLX42/include/MLX42
+endif
 # you need to fix this path
+# test:
+# 	echo $(INCLUDES)
 
 # Source files
 SRCS = $(wildcard $(SRC_DIR)/*.c)
@@ -25,7 +41,7 @@ SRCS += $(wildcard $(SRC_DIR)/rays_casting/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Include paths
-INCLUDES =  -I$(INC_DIR)  -I$(LIBFT_DIR)/include -I/Users/$(USER)/MLX42/include/MLX42
+# INCLUDES =  -I$(INC_DIR)  -I$(LIBFT_DIR)/include -I/Users/$(USER)/MLX42/include/MLX42
 
 # Rules
 all: $(NAME)

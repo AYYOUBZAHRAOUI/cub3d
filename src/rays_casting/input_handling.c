@@ -28,9 +28,9 @@ void	move_player(t_game *game, double move_step, int direction)
 
 void	handle_input(t_game *game)
 {
-	double	move_step;
+	// double	move_step;
 
-	move_step = 5.0;
+	// move_step = 5.0;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(game->mlx);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
