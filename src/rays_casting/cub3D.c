@@ -6,7 +6,7 @@
 /*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:38:22 by ybekach           #+#    #+#             */
-/*   Updated: 2025/06/21 19:58:36 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:28:06 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ void    load_textures(t_game *game)
     game->textures[1].tex = mlx_load_png(game->map.so);
     game->textures[2].tex = mlx_load_png(game->map.we);
     game->textures[3].tex = mlx_load_png(game->map.ea);
+    // error textur handeling
     game->textures[0].img = mlx_texture_to_image(game->mlx, game->textures[0].tex);
     game->textures[1].img = mlx_texture_to_image(game->mlx, game->textures[1].tex);
     game->textures[2].img = mlx_texture_to_image(game->mlx, game->textures[2].tex);
     game->textures[3].img = mlx_texture_to_image(game->mlx, game->textures[3].tex);
+    // error image handeling
 }
 
-int    calculate_map_dimensions(t_game *game)
+void    calculate_map_dimensions(t_game *game)
 {
     int    i;
     int    width;
@@ -79,5 +81,4 @@ int    calculate_map_dimensions(t_game *game)
     game->map.height = i;
     width = ft_strlen(game->map.map[0]);
     game->map.width = width;
-    return (0);
 }

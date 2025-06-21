@@ -6,7 +6,7 @@
 /*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:51:13 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/06/21 19:57:14 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:41:53 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ int	main(int ac, char **av)
 	int_map(&(game.map));
 	if (!(parse_map(av[1], &(game.map))))
 		return (free_map(&(game.map)), 1);
-	if (calculate_map_dimensions(&game))
-    {
-        ft_putstr_fd("Error: Invalid map dimensions\n", 2);
-        return (1);
-    }
+	calculate_map_dimensions(&game);
+	set_player_pos(&game);
 	print_map(&(game.map));
 	printf("map:\n");
 	// next
@@ -51,11 +48,11 @@ int	main(int ac, char **av)
 	game.img = mlx_new_image(game.mlx, WIDTH, HEIGHT);
 	if (!game.img || (mlx_image_to_window(game.mlx, game.img, 0, 0) < 0))
 		perror("Error");
-	set_player_pos(&game);
+	
 	load_textures(&game);
 	mlx_loop_hook(game.mlx, ft_gaming, &game);
 	mlx_loop(game.mlx);
-	// mlx_terminate(game.mlx);
+	mlx_terminate(game.mlx);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:33:59 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/06/21 19:36:56 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:23:06 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		print_map(t_map *map);
 /* ---------------------------------------------- */
 /* ----------- RAYS CASTING FUNCTION ------------ */
 /* ---------------------------------------------- */
-int		calculate_map_dimensions(t_game *game);
+void		calculate_map_dimensions(t_game *game);
 int    	is_wall_at(t_game *game, double x, double y);
 double  normalize_angle(double angle);
 t_ray   cast_ray(t_game *game, double angle);

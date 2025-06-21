@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayyoubz <ayyoubz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 22:17:02 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/06/05 18:50:47 by ayyoubz          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:23:10 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	parse_map(char *file, t_map *map)
 		if (parse_texture_and_color(fd, map)
 			&& check_exist_file(map)
 			&& parse_map_lines(fd, map)
-			&& print_map(map)
-			&& printf("Map parsed successfully\n")
-			&& check_map(map->map)
-			&& printf("Map is valid\n"))
+			&& check_map(map->map))
 		{
 			close(fd);
 			return (1);

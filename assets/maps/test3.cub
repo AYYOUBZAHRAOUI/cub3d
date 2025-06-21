@@ -1,1 +1,14 @@
-TT hello world
+C 225,30,0
+NO textures/north.png
+SO textures/south.png
+WE textures/west.png
+EA textures/east.png
+F 220, 100, 20
+
+
+        1
+       101
+      10001
+     1000001
+    1000S0001
+    111111111

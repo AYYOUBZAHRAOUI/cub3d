@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normalize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 01:24:35 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/29 22:47:56 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/21 21:53:15 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**normalize_map(char **map)
 	{
 		normalized[i] = malloc((max_length + 1) * sizeof(char));
 		fill_line_by_spaces(normalized[i], max_length);
-		strlcpy(normalized[i], map[i], max_length + 1);
+		ft_memcpy(normalized[i], map[i], ft_strlen(map[i]));
 	}
 	normalized[num_lines] = NULL;
 	return (free_str_array(map), normalized);

@@ -6,7 +6,7 @@
 /*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:37:36 by ybekach           #+#    #+#             */
-/*   Updated: 2025/06/21 18:30:55 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/21 21:42:45 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ t_ray	cast_ray(t_game *game, double angle)
 	while (!is_wall_at(game, rx, ry))
 	{
 		update_ray_pos(&rx, &ry, angle, step);
-		if (rx < 0 || ry < 0 || rx >= game->map.width * TILE_SIZE 
-			|| ry >= game->map.height * TILE_SIZE)
-			break ;
+		// if (rx < 0 || ry < 0 || rx >= game->map.width * TILE_SIZE 
+		// 	|| ry >= game->map.height * TILE_SIZE)
+		// 	break ;
 	}
 	ray.wall_hit_x = rx;
 	ray.wall_hit_y = ry;
