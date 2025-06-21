@@ -3,50 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:37:36 by ybekach           #+#    #+#             */
-/*   Updated: 2025/05/22 15:11:35 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:30:55 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	is_wall_at(t_game *game, double x, double y)
+static void	update_ray_pos(double *rx, double *ry, double angle, double step)
 {
-	int	grid_x;
-	int	grid_y;
-
-	grid_x = (int)((x - TILE_SIZE / 2)   / TILE_SIZE);
-	grid_y = (int)((y - TILE_SIZE / 2) / TILE_SIZE);
-	if (grid_x < 0 || grid_y < 0)
-		return (1);
-	return (game->map.map[grid_y][grid_x] == '1');
+	*rx += cos(angle) * step;
+	*ry += sin(angle) * step;
 }
 
-double	normalize_angle(double angle)
+static void	determine_hit_side(t_ray *ray, double angle)
 {
-	angle = fmod(angle, 2 * M_PI);
-	if (angle < 0)
-		angle += 2 * M_PI;
-	return (angle);
-}
+	double	x_offset;
 
-double	cast_ray(t_game *game, double ray_angle)
-{
-	double	ray_x;
-	double	ray_y;
-	double	step_size;
-
-	ray_angle = normalize_angle(ray_angle);
-	ray_x = game->player.x;
-	ray_y = game->player.y;
-	step_size = 1.0;
-	while (!is_wall_at(game, ray_x, ray_y))
+	x_offset = fmod(ray->wall_hit_x, TILE_SIZE);
+	if (fabs(x_offset - TILE_SIZE) < 1.0 || x_offset < 1.0)
 	{
-		ray_x += cos(ray_angle) * step_size;
-		ray_y += sin(ray_angle) * step_size;
+		ray->hit_vertical = 1;
+		if (cos(angle) > 0)
+			ray->tex_dir = 3;
+		else
+			ray->tex_dir = 2;
 	}
-	return (sqrt((ray_x - game->player.x) * (ray_x - game->player.x)
-			+ (ray_y - game->player.y) * (ray_y - game->player.y)));
+	else
+	{
+		ray->hit_vertical = 0;
+		if (sin(angle) > 0)
+			ray->tex_dir = 0;
+		else
+			ray->tex_dir = 1;
+	}
+}
+
+t_ray	cast_ray(t_game *game, double angle)
+{
+	t_ray	ray;
+	double	step;
+	double	rx;
+	double	ry;
+
+	step = 1.0;
+	rx = game->player.x;
+	ry = game->player.y;
+	angle = normalize_angle(angle);
+	while (!is_wall_at(game, rx, ry))
+	{
+		update_ray_pos(&rx, &ry, angle, step);
+		if (rx < 0 || ry < 0 || rx >= game->map.width * TILE_SIZE 
+			|| ry >= game->map.height * TILE_SIZE)
+			break ;
+	}
+	ray.wall_hit_x = rx;
+	ray.wall_hit_y = ry;
+	ray.dist = sqrt(pow(rx - game->player.x, 2) + pow(ry - game->player.y, 2));
+	determine_hit_side(&ray, angle);
+	return (ray);
 }

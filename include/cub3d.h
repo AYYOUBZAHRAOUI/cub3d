@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:33:59 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/29 23:49:31 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:36:56 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define TILE_SIZE 64
-# define FOV (M_PI / 3)
 # define NUM_RAYS WIDTH
 
 /*
@@ -38,6 +37,7 @@ typedef struct s_player
 {
 	double	x;
 	double	y;
+	double	fov;
 	double	angle;
 }				t_player;
 
@@ -48,8 +48,11 @@ typedef struct rgb
 	int	blue;
 }	t_rgb;
 
-typedef struct map
+typedef struct s_map
 {
+	char	**map;
+	int		height;
+	int		width;
 	char	*so;
 	char	*no;
 	char	*we;
@@ -58,16 +61,31 @@ typedef struct map
 	char	*ceiling_color;
 	t_rgb	*f;
 	t_rgb	*c;
-	char	**map;
-}	t_map;
+}    t_map;
+
+typedef struct s_ray
+{
+    double    dist;
+    double    wall_hit_x;
+    double    wall_hit_y;
+    int        hit_vertical;
+    int        tex_dir;
+}    t_ray;
+
+typedef struct s_texture
+{
+    mlx_texture_t	*tex;
+    mlx_image_t        *img;
+}    t_texture;
 
 typedef struct s_game
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_player	player;
-	t_map	map;
-}				t_game;
+    mlx_t        *mlx;
+    mlx_image_t    *img;
+    t_player    player;
+    t_texture    textures[4]; // 0: for west example 1: east 2; south 3: north
+    t_map        map;
+}    t_game;
 
 /* ----------------------------------------- */
 /* ----------- PARSING FUNCTION ------------ */
@@ -107,13 +125,17 @@ int		print_map(t_map *map);
 /* ---------------------------------------------- */
 /* ----------- RAYS CASTING FUNCTION ------------ */
 /* ---------------------------------------------- */
-void	move_player(t_game *game, double move_step, int direction);
-void	handle_input(t_game *game);
-double 	calculate_wall_height(t_game *game, int i);
-void	draw_3d_walls(t_game *game);
-void	update(void *param);
-int		is_wall_at(t_game *game, double x, double y);
-double	normalize_angle(double angle);
-double	cast_ray(t_game *game, double ray_angle);
+int		calculate_map_dimensions(t_game *game);
+int    	is_wall_at(t_game *game, double x, double y);
+double  normalize_angle(double angle);
+t_ray   cast_ray(t_game *game, double angle);
+void    draw_background(t_game *game);
+void    draw_3d_walls(t_game *game);
+void    move_player_ws(t_game *game, double step, int dir);
+void    move_player_ad(t_game *game, double step, int dir);
+void    handle_input(t_game *game);
+void    ft_gaming(void *param);
+void    set_player_pos(t_game *game);
+void    load_textures(t_game *game);
 
 #endif

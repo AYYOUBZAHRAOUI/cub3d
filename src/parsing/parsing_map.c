@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 22:32:03 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/29 22:39:10 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:26:45 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	handle_empty_lines(char *line)
 	trim_line = ft_strtrim(line, " \t\n");
 	if (*trim_line == '\0')
 	{
-		free(trim_line);
 		free(line);
 		line = malloc(3*sizeof(char));
 		line[0] = ' ';
 		line[1] = '\n';
 		line[2] = '\0';
 	}
+	free(trim_line);
 }
 
 /*

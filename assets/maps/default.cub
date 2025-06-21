@@ -1,8 +1,8 @@
 C 225,30,0
-NO /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
-SO /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
-WE /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub 
-EA /home/ayyoubz/Documents/cub3d/assets/maps/test1.cub
+NO textures/north.png
+SO textures/south.png
+WE textures/west.png
+EA textures/east.png
 F 220, 100, 20
 
 
@@ -31,7 +31,7 @@ F 220, 100, 20
                                 111111111111111111111111111111
                                 100000000011000000000000000001
                                 101100000111000000000000000011
-                                10010000000000000000000000001     11111111
+                                100100000000000000000000000011     11111111
                                 100100000000000000000000000001     11111111
                                 10010000000000000000000000000111111111111111111
                                 11111111101100000111000000000000000000000000001     

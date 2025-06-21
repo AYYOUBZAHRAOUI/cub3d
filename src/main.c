@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:51:13 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/29 22:49:22 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/21 19:57:14 by ybekach          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,6 @@
 void	check_leak(void)
 {
 	system("leaks -q cub3D");
-}
-
-void player_position(t_game *game)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (game->map.map[x])
-	{
-		y = 0;
-		while (game->map.map[x][y])
-		{
-			if (game->map.map[x][y] == 'W' || 
-				game->map.map[x][y] == 'E' ||
-				game->map.map[x][y] == 'N' ||
-				game->map.map[x][y] == 'S')
-			{
-				game->player.x = x * TILE_SIZE + TILE_SIZE / 2; // need more for this 
-				game->player.y = y * TILE_SIZE + TILE_SIZE / 2; // need more for this
-				if (game->map.map[x][y] == 'W')
-					game->player.angle = M_PI;
-				else if (game->map.map[x][y] == 'E')
-					game->player.angle = 0;
-				else if (game->map.map[x][y] == 'N')
-					game->player.angle = -M_PI / 2;
-				else if (game->map.map[x][y] == 'S')
-					game->player.angle = M_PI / 2;
-				return ;
-			}
-			y++;
-		}
-		x++;
-	}
 }
 // static void ft_hook(void* param)
 // {
@@ -71,6 +37,11 @@ int	main(int ac, char **av)
 	int_map(&(game.map));
 	if (!(parse_map(av[1], &(game.map))))
 		return (free_map(&(game.map)), 1);
+	if (calculate_map_dimensions(&game))
+    {
+        ft_putstr_fd("Error: Invalid map dimensions\n", 2);
+        return (1);
+    }
 	print_map(&(game.map));
 	printf("map:\n");
 	// next
@@ -80,8 +51,9 @@ int	main(int ac, char **av)
 	game.img = mlx_new_image(game.mlx, WIDTH, HEIGHT);
 	if (!game.img || (mlx_image_to_window(game.mlx, game.img, 0, 0) < 0))
 		perror("Error");
-	player_position(&game);
-	mlx_loop_hook(game.mlx, update, &game);
+	set_player_pos(&game);
+	load_textures(&game);
+	mlx_loop_hook(game.mlx, ft_gaming, &game);
 	mlx_loop(game.mlx);
 	// mlx_terminate(game.mlx);
 	return (0);
