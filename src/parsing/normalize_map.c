@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normalize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 01:24:35 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/06/21 21:53:15 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/22 05:23:37 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	get_max_length(char **map)
 */
 int	count_lines(char **map)
 {
-	int	count;
-	char *trim_line;
+	int		count;
+	char	*trim_line;
+
 	count = 0;
 	while (map[count])
 		count++;
-	
 	while (count > 0)
 	{
 		trim_line = ft_strtrim(map[count - 1], " \t\n");
@@ -60,7 +60,7 @@ int	count_lines(char **map)
 		else
 		{
 			free(trim_line);
-			break;
+			break ;
 		}
 	}
 	return (count);
@@ -89,9 +89,11 @@ void	fill_line_by_spaces(char *line, int max_length)
  * @brief normalize the map
 	* @param map the map to normalize is a double pointer of char
 	* @return the normalized map
-	* @note this function will normalize the map by filling the empty spaces with ' '
+	* @note this function will normalize the map by filling 
+	the empty spaces with ' '
 	* and make sure that all lines are the same length
-	* @warning is possible to have lines with different length there is have two '\0'
+	* @warning is possible to have lines with different length 
+	there is have two '\0'
 	* @warning this function don't protect against memory leaks
 	* @note this function will also free the old map
 */
@@ -103,12 +105,12 @@ char	**normalize_map(char **map)
 	int		num_lines;
 
 	max_length = get_max_length(map);
-	num_lines = count_lines(map); // you need to edit this function to skip empty lines at the end of the list
+	num_lines = count_lines(map);
 	normalized = malloc((num_lines + 1) * sizeof(char *));
 	if (normalized == NULL)
 		return (perror("Error"), NULL);
 	i = -1;
-	while (++i < num_lines) // i don't trust this method
+	while (++i < num_lines)
 	{
 		normalized[i] = malloc((max_length + 1) * sizeof(char));
 		fill_line_by_spaces(normalized[i], max_length);

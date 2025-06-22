@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                        */
 /*                                                        :::      ::::::::   */
 /*   map_rendering.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybekach <ybekach@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:35:19 by ybekach           #+#    #+#             */
-/*   Updated: 2025/06/21 21:34:37 by ybekach          ###   ########.fr       */
+/*   Updated: 2025/06/22 05:52:03 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ void	draw_ceiling_and_floor(t_game *game, int ceiling_color, int floor_color)
 
 void	draw_background(t_game *game)
 {
-    int	ceiling_color;
-    int	floor_color;
+	int	ceiling_color;
+	int	floor_color;
 
-    ceiling_color = (game->map.c->red << 24) 
-					| (game->map.c->green << 16) | (game->map.c->blue << 8) 
-					| 0xFF;
-    floor_color = (game->map.f->red << 24) 
-				| (game->map.f->green << 16) | (game->map.f->blue << 8) 
-					| 0xFF;
-    draw_ceiling_and_floor(game, ceiling_color, floor_color);
+	ceiling_color = (game->map.c->red << 24) 
+		| (game->map.c->green << 16) | (game->map.c->blue << 8) 
+		| 0xFF;
+	floor_color = (game->map.f->red << 24) 
+		| (game->map.f->green << 16) | (game->map.f->blue << 8) 
+		| 0xFF;
+	draw_ceiling_and_floor(game, ceiling_color, floor_color);
 }
 
 void	draw_3d_walls(t_game *game)

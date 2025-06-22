@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:31:45 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/29 22:37:51 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/22 05:21:45 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ int	check_map(char **map)
 {
 	if (check_map_characters(map) == 0)
 	{
-		ft_putstr_fd("Error: Map have invalid characters or miss one or more\n", 2);
+		ft_putstr_fd("Error: Map have invalid characters or miss it\n", 2);
 		return (0);
 	}
-	printf("debug: 1 \n");
 	if (check_map_walls_1(map) == 0)
 	{
 		ft_putstr_fd("Error: Map is not surrounded by walls\n", 2);
@@ -84,11 +83,10 @@ int	check_map_characters(char **map)
 		{
 			if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
 			{
-				if ((map[i][j] == 'N' || map[i][j] == 'S' 
-				|| map[i][j] == 'E' || map[i][j] == 'W') && !checked)
-					checked = 1;
-				else
+				if (!((map[i][j] == 'N' || map[i][j] == 'S' 
+					|| map[i][j] == 'E' || map[i][j] == 'W') && !checked))
 					return (0);
+				checked = 1;
 			}
 			if (map[i][j] == '0' && zero == 0)
 				zero = 1;
@@ -128,12 +126,8 @@ int	check_map_walls_1(char **map)
 			return (0);
 		j++;
 	}
-	printf("debug: 2 \n");
 	if (check_map_walls_2(map) == 0)
-	{
-		printf("debug: 3 \n");
 		return (0);
-	}
 	return (1);
 }
 

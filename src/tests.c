@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:51:29 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/30 00:03:23 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/22 03:53:51 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	print_map(t_map *map)
 		map->c->red, map->c->green, map->c->blue);
 	printf("floor color R: %d; G: %d; B: %d;\n",
 		map->f->red, map->f->green, map->f->blue);
+	printf("Map height: %d\n", map->height);
+	printf("Map width: %d\n", map->width);
 	x = map->map;
 	if (x == NULL)
 	{
