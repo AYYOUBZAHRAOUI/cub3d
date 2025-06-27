@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 23:33:59 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/06/22 05:20:51 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:12:13 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,5 +197,7 @@ void	handle_input(t_game *game);
 void	ft_gaming(void *param);
 void	set_player_pos(t_game *game);
 int		load_textures(t_game *game);
+int		check_files(t_map *map);
+int		check_exist_file(char *path);
 
 #endif

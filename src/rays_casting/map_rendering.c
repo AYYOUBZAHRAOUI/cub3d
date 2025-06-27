@@ -42,8 +42,8 @@ void	draw_ceiling_and_floor(t_game *game, int ceiling_color, int floor_color)
 
 void	draw_background(t_game *game)
 {
-	int	ceiling_color;
-	int	floor_color;
+	int		ceiling_color;
+	int		floor_color;
 
 	ceiling_color = (game->map.c->red << 24) 
 		| (game->map.c->green << 16) | (game->map.c->blue << 8) 
@@ -54,51 +54,82 @@ void	draw_background(t_game *game)
 	draw_ceiling_and_floor(game, ceiling_color, floor_color);
 }
 
-void	draw_3d_walls(t_game *game)
+static int	get_tx(t_ray *r, mlx_texture_t *t)
 {
-	int			i;
-	t_ray		ray;
-	double		ray_angle;
-	double		dist;
-	double		wall_h;
-	int			start;
-	int			end;
-	int			y;
-	int			tx;
-	int			ty;
-	uint32_t	color;
-	mlx_texture_t	*tex;
+	int	tx;
+
+	if (r->hit_vertical)
+		tx = (int)fmod(r->wall_hit_y, TILE_SIZE);
+	else
+		tx = (int)fmod(r->wall_hit_x, TILE_SIZE);
+	return ((tx * t->width) / TILE_SIZE);
+}
+
+// static void	draw_column(t_game *g, t_ray *r, int x, double wh)
+// {
+// 	int				
+// 	int				y;
+// 	int				ty;
+// 	int				s;
+// 	mlx_texture_t	*t;
+
+// 	t = g->textures[r->tex_dir].tex;
+// 	s = (HEIGHT / 2) - (wh / 2);
+// 	y = s;
+// 	while (y < s + wh)
+// 	{
+// 		if (y >= 0 && y < HEIGHT)
+// 		{
+// 			ty = ((y - s) * t->height) / wh;
+// 			if ((unsigned)ty < t->height)
+// 				mlx_put_pixel(g->img, x,
+// 					y, *(uint32_t *)
+// 					&t->pixels[4 * 
+// 					(ty * t->width + get_tx(r, t))]);
+// 		}
+// 		y++;
+// 	}
+// }
+
+static void	draw_column(t_game *g, t_ray *r, int x, double wh)
+{
+	int				index;
+	int				y;
+	int				ty;
+	int				s;
+	mlx_texture_t	*t;
+
+	t = g->textures[r->tex_dir].tex;
+	s = (HEIGHT / 2) - (wh / 2);
+	y = s;
+	while (y < s + wh)
+	{
+		if (y >= 0 && y < HEIGHT)
+		{
+			ty = ((y - s) * t->height) / wh;
+			index = 4 * (ty * t->width + get_tx(r, t));
+			if ((unsigned)ty < t->height)
+				mlx_put_pixel(g->img, x, y, *(uint32_t *)&t->pixels[index]);
+		}
+		y++;
+	}
+}
+
+void	draw_3d_walls(t_game *g)
+{
+	int		i;
+	t_ray	r;
+	double	a;
+	double	d;
 
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		ray_angle = game->player.angle - (game->player.fov / 2)
-			+ ((double)i / WIDTH) * game->player.fov;
-		ray = cast_ray(game, ray_angle);
-		dist = ray.dist * cos(ray_angle - game->player.angle);
-		wall_h = (TILE_SIZE * HEIGHT) / dist;
-		start = (HEIGHT / 2) - (wall_h / 2);
-		end = start + wall_h;
-		if (ray.hit_vertical)
-			tx = (int)fmod(ray.wall_hit_y, TILE_SIZE);
-		else
-			tx = (int)fmod(ray.wall_hit_x, TILE_SIZE);
-		tex = game->textures[ray.tex_dir].tex;
-		tx = (tx * tex->width) / TILE_SIZE;
-		y = start;
-		while (y < end)
-		{
-			if (y >= 0 && y < HEIGHT)
-			{
-				ty = ((y - start) * tex->height) / wall_h;
-				if ((uint32_t)tx < tex->width && (uint32_t)ty < tex->height)
-				{
-					color = *(uint32_t *)&tex->pixels[4 * (ty * tex->width + tx)];
-					mlx_put_pixel(game->img, i, y, color);
-				}
-			}
-			y++;
-		}
+		a = g->player.angle - (g->player.fov / 2)
+			+ ((double)i / WIDTH) * g->player.fov;
+		r = cast_ray(g, a);
+		d = r.dist * cos(a - g->player.angle);
+		draw_column(g, &r, i, (TILE_SIZE * HEIGHT) / d);
 		i++;
 	}
 }

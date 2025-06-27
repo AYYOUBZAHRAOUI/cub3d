@@ -6,7 +6,7 @@
 /*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:13:01 by ayzahrao          #+#    #+#             */
-/*   Updated: 2025/05/08 15:46:12 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:11:43 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,39 @@ void	free_str_array(char **split)
 		i++;
 	}
 	free(split);
+}
+
+/*
+ * @brief check if the file exists and if it is a valid texture file
+ * @param map the map to check
+ * @return 1 if the file exists and is a valid texture file,
+ *  0 if the file does not exist or is not a valid texture file
+ * @note this function will print an error message 
+ * if the file does not exist or is not a valid texture file
+*/
+int	check_exist_file(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error:");
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
+int	check_files(t_map *map)
+{
+	if (!check_exist_file(map->no)
+		|| !check_exist_file(map->so)
+		|| !check_exist_file(map->we)
+		|| !check_exist_file(map->ea))
+	{
+		perror("Error:");
+		return (0);
+	}
+	return (1);
 }

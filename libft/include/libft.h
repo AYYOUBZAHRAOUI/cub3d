@@ -3,24 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayzahrao <ayzahrao@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ayzahrao <ayzahrao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:22:13 by ayzahrao          #+#    #+#             */
-/*   Updated: 2024/01/20 04:16:25 by ayzahrao         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:08:37 by ayzahrao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
 # include <stdlib.h>
 # include <unistd.h>
+# define BUFFER_SIZE 10
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 10
-#endif
-
-char 	*ft_get_next_line(int fd);
+char	*ft_get_next_line(int fd);
 int		ft_isalnum(int c);
 int		ft_isdigit(int c);
 int		ft_isalpha(int c);

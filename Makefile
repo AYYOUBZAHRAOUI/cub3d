@@ -35,9 +35,19 @@ endif
 # 	echo $(INCLUDES)
 
 # Source files
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-SRCS += $(wildcard $(SRC_DIR)/parsing/*.c)
-SRCS += $(wildcard $(SRC_DIR)/rays_casting/*.c)
+SRCS = src/main.c \
+		src/tests.c \
+		src/tools.c \
+		src/parsing/check_map.c \
+		src/parsing/normalize_map.c \
+		src/parsing/parsing.c \
+		src/parsing/parsing_colors.c \
+		src/parsing/parsing_map.c \
+		src/rays_casting/cub3D.c \
+		src/rays_casting/helper.c \
+		src/rays_casting/input_handling.c \
+		src/rays_casting/map_rendering.c \
+		src/rays_casting/ray_casting.c
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Include paths
